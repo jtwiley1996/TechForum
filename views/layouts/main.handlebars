@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechSpotlight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body class="bg-mine inter text-white">
+    <div class="justify-around">
+        <header class="flex flew-row justify-between content-center items-center p-10">
+            <a id="theTitle" href="/" class="color-mine text-5xl font-bold text-shadow">
+                TechForum
+            </a>
+            <nav>
+                {{#if logged_in}}
+                <a href="/" id="homeButton" class="text-3xl px-5 font-bold text-shadow">Home</a>
+                <a href="/dashboard" id="homeButton" class="text-3xl px-5 font-bold text-shadow">Dashboard</a>
+                <button  class="logout text-3xl px-10 login-button color-mine font-bold text-shadow" id="logout" >Logout</button>
+                {{else}}
+                <a href="/" id="homeButton" class="text-3xl px-5 font-bold text-shadow">Home</a>
+                <a href="/dashboard" id="homeButton" class="text-3xl px-5 font-bold text-shadow">Dashboard</a>
+                <a href="/login" id="homeButton" class="text-3xl px-10 login-button color-mine font-bold text-shadow">Login</a>
+                {{/if}}
+            </nav>
+        </header>
+        <main>
+            {{{ body }}}
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+    {{#if logged_in}}
+        <script src="/js/logout.js"></script>
+    {{/if}}
+</body>
+
+</html>
