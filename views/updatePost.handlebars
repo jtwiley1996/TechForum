@@ -1,0 +1,43 @@
+<div class="ml-20 mt-10">
+    <div>
+        <h1 class="text-5xl">Welcome, {{username}}</h1>
+    </div>
+</div>
+
+<div class="flex flex-row ml-20 mt-10" >
+    <div class="flex-auto blog-container w-10">
+        <h3 class="text-4xl my-8 pl-5">
+            Update Post:
+        </h3>
+        <form class="update-post-form">
+            <div class="mr-10">
+                <label class="text-2xl pl-5">Post title:</label>
+                <textarea class="form-input w-full mt-1 pl-2 h-12 text-black ml-5 mb-6 rounded-lg border text-xl pt-2" type="text" id="update-title"/>{{title}}</textarea>
+            </div>
+            <div class="mr-10">
+                <label class="text-2xl pl-5">Content:</label>
+                <textarea class="form-input w-full mt-1 pl-2 h-auto text-black mx-5 block p-2.5 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="update-content"/>{{content}}</textarea>
+            </div>
+            <div class="text-center my-10 ml-10">
+                <button type="submit" id="homeButton" class="btn-create text-2xl" style="background-color: #6DB1D8">Update</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class=" flex-auto updated-post-list w-64 ml-28 mr-24 ">
+        <h3 class="text-4xl mb-8">Current post:</h3>
+
+        <div class="flex flex-row justify-between blog-container mb-5">
+            <div>
+                <h4 class="text-3xl"><a href="/dashboard/{{post.id}}">{{{get_emoji}}} {{title}}</a></h4>
+                <h4 class="text-xl"><a href="/dashboard/{{post.id}}">{{content}}</a></h4>
+            </div>
+            <div>
+                <button class="btn-delete"data-id="{{post.id}}" style="background-color:rgb(112, 156, 214)">Being updated</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/updatePost.js"></script>

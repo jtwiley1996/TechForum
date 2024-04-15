@@ -1,0 +1,21 @@
+<div class="text-center blog-container">
+  <h2 class="text-3xl text-shadow">{{title}}</h2>
+  <p>{{{get_emoji}}}</p>
+  <p class="text-xl">{{content}}</p>
+  <p class="text-xl">Created by <span class="color-mine text-shadow" id="showing">{{user.username}}</span> on {{format_date date_created}}</p>
+</div>
+<div class="text-center blog-container mt-5">
+                <h3 class="text-2xl color-mine font-bold text-shadow">Comments:</h3>
+                {{#each comments as |comment| }}
+                    <div>
+                        <p class="text-xl">{{comment.comment_text}} ~ <span class="text-lg">By <span class="color-mine text-shadow" id="showing">{{comment.user.username}}</span> on {{format_date comment.date_created}}</span></p>
+                    </div>
+                {{/each}}
+            </div>
+
+{{> comment-form}}
+
+{{#if logged_in}}
+<script src="/js/comment.js"></script>
+<script src="/js/logout.js"></script>
+{{/if}}

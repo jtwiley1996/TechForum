@@ -1,0 +1,35 @@
+<div class="flex flex-row justify-between mx-20">
+    <div class="flex-auto w-10 text-shadow ">
+        <h1 class="text-6xl leading-snug">"Unleash <span id="showing" class="color-mine border-word ">Innovation</span>, Navigate the Digital Frontier: </h1>
+        <h1 class="text-6xl leading-snug">Your Source for <span id="showing" class="color-mine border-word ">Tech</span> Insight!"</h1>
+        <img src="/images/hero.avif" id="image" class="my-10 mx-auto rounded-xl relative max-w-md cursor-pointer ">
+    </div>
+    <div class="flex-auto w-64 text-xl ">
+        <!-- Loop over each object in the post array -->
+        <h1 id="blogTitle"class="text-4xl ml-10">Blog Posts</h1>
+        {{#unless posts}}
+        <h1 class="text-2xl mt-5 ml-10 text-red-400">No posts yet!😞</h1>
+        {{/unless}}
+        {{#each posts as |post| }}
+        <div class="flex flex-col post mx-10 blog-container my-5">
+        <div class="flex flex-row justify-between">
+            <h2>
+            <!-- Call helper function with triple brackets to render the emoji span as HTML -->
+            {{{get_emoji}}}
+            <a href="/post/{{post.id}}" class="color-mine text-2xl" id="titles">{{post.title}}</a>
+            </h2>
+            <p>Created by {{post.user.username}} on {{format_date post.date_created}}</p>
+        </div>
+        <div class="">
+            <p>
+            {{post.content}}
+            </p>
+        </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{#if logged_in}}
+<script src="/js/logout.js"></script>
+{{/if}}
+
