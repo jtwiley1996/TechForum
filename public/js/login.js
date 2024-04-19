@@ -34,32 +34,41 @@ const signupFormHandler = async (event) => {
   const email = document.querySelector('#email-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
 
-  if (username && email && password) {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify({ username, email, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+  console.log('Username:', username); // Added console log
+  console.log('Email:', email); // Added console log
+  console.log('Password:', password); // Added console log
 
-    if (response.ok) {
-      document.location.replace('/dashboard');
-    } else {
-      try {
-        // Parse response body as JSON to access error message
-        const errorData = await response.json();
-        if (errorData && errorData.message) {
-          alert(errorData.message);
-        } else {
-          alert('An error occurred. Please try again.');
+  if (username && email && password) {
+    try {
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
+        body: JSON.stringify({ username, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        document.location.replace('/dashboard');
+      } else {
+        try {
+          const errorData = await response.json();
+          if (errorData && errorData.message) {
+            alert(errorData.message);
+          } else {
+            alert('An error occurred. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error parsing response:', error);
+          alert('An error occurred. Please try again.'); 
         }
-      } catch (error) {
-        // If parsing response body as JSON fails
-        console.error('Error parsing response:', error);
-        alert('An error occurred. Please try again.'); 
       }
+    } catch (err) {
+      console.error('Network error:', err);
+      alert('A network error occurred. Please try again.'); 
     }
   }
 };
+
+
 
 
 
