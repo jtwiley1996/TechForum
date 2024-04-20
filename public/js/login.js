@@ -1,77 +1,58 @@
-
-
-
-const loginFormHandler = async (event) => {
-  event.preventDefault();
-
-  const email = document.querySelector('#email-login').value.trim();
-  const password = document.querySelector('#password-login').value.trim();
-
-  if (email && password) {
-    try {
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (response.ok) {
-        document.location.replace('/dashboard');
-      } else {
-        const data = await response.json();
-        alert(data.message); // Display the error message sent from the server
-      }
-    } catch (err) {
-      console.error('Error:', err); // Log any unexpected errors
-    }
-  }
-};
-
 const signupFormHandler = async (event) => {
   event.preventDefault();
 
+  // Get form input values
   const username = document.querySelector('#username-signup').value.trim();
   const email = document.querySelector('#email-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
 
-  console.log('Username:', username); // Added console log
-  console.log('Email:', email); // Added console log
-  console.log('Password:', password); // Added console log
+  // Validate input fields
+  if (!username || !email || !password) {
+    alert('Please provide username, email, and password.');
+    return;
+  }
 
-  if (username && email && password) {
-    try {
-      const response = await fetch('/api/users/signup', {
-        method: 'POST',
-        body: JSON.stringify({ username, email, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
+  // Check if the email is in a valid format
+  if (!isValidEmail(email)) {
+    alert('Please provide a valid email address.');
+    return;
+  }
 
-      if (response.ok) {
-        document.location.replace('/dashboard');
-      } else {
-        try {
-          const errorData = await response.json();
-          if (errorData && errorData.message) {
-            alert(errorData.message);
-          } else {
-            alert('An error occurred. Please try again.');
-          }
-        } catch (error) {
-          console.error('Error parsing response:', error);
-          alert('An error occurred. Please try again.'); 
-        }
-      }
-    } catch (err) {
-      console.error('Network error:', err);
-      alert('A network error occurred. Please try again.'); 
+  // Check if the password meets the minimum length requirement
+  if (password.length < 8) {
+    alert('Password must be at least 8 characters long.');
+    return;
+  }
+
+  try {
+    // Send signup request to the server
+    const response = await fetch('/api/users/signup', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      // Redirect to dashboard upon successful signup
+      window.location.replace('/dashboard');
+    } else {
+      // Display error message if signup fails
+      const errorData = await response.json();
+      const errorMessage = errorData.message || 'Failed to sign up. Please try again.';
+      alert(errorMessage);
     }
+  } catch (err) {
+    console.error('Error:', err);
+    alert('An unexpected error occurred. Please try again.');
   }
 };
 
+// Helper function to validate email format
+const isValidEmail = (email) => {
+  // Regular expression to check email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
-
-
-
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+// Event listener for form submission
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-
