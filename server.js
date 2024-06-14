@@ -16,23 +16,23 @@ const hbs = exphbs.create({ helpers });
 
 // Session configuration
 const sess = {
-    secret: process.env.EXP_SESS_SEC, // Use the session secret from environment variable
+    secret: process.env.EXP_SESS_SEC || 'defaultsecret', // Fallback to a default secret if EXP_SESS_SEC is not set
     cookie: {
-        maxAge: 300000, // Session expires after 5 minutes of inactivity
-        httpOnly: true, // HTTP only cookie
+        maxAge: 24 * 60 * 60 * 1000, // Session expires after 24 hours
+        httpOnly: true,
         secure: false, // Set to true if using HTTPS
-        sameSite: 'strict', // Strict same-site policy
+        sameSite: 'strict',
     },
     resave: false,
     saveUninitialized: true,
     store: new SequelizeStore({
         db: sequelize,
-        expiration: 24 * 60 * 60 * 1000 // Session expires after 24 hours (optional)
+        expiration: 24 * 60 * 60 * 1000 // Session expires after 24 hours
     })
 };
 
-app.use(session(sess)); // Apply session middleware
-app.use(routes); // Apply routes
+app.use(session(sess));
+app.use(routes);
 
 // Set up handlebars engine and views
 app.engine('handlebars', hbs.engine);
@@ -51,4 +51,3 @@ sequelize.sync({ force: false }).then(() => {
         console.log(`Server is listening on http://localhost:${PORT}`);
     });
 });
-
