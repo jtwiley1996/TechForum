@@ -16,7 +16,7 @@ TechForum is a state-of-the-art blog platform created for tech enthusiasts. It's
 
 You can interact with this app in two ways:
 
-1. **Visit the deployed app**: [TechForum](https://techforum-d5eb2cc3b396.herokuapp.com/)
+1. **Visit the deployed app**: [TechForum](https://fathomless-citadel-23387-3144ed403637.herokuapp.com/)
    
 2. **Run the code locally**:
 

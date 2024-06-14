@@ -5,6 +5,7 @@ const session = require('express-session');
 const path = require('path');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
+
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -14,11 +15,11 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ helpers });
 
 const sess = {
-    secret: process.env.SESSION_SECRET || 'your_default_secret_here', // Adjust default secret as needed
+    secret: process.env.EXP_SESS_SEC, // Use the session secret from environment variable
     cookie: {
         maxAge: 300000,
         httpOnly: true,
-        secure: false,
+        secure: false, // Set to true if using HTTPS
         sameSite: 'strict',
     },
     resave: false,
@@ -41,4 +42,3 @@ app.use(express.static(path.join(__dirname, 'public')));
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => console.log(`Now listening at http://localhost:${PORT}`));
 });
-
